@@ -15,9 +15,11 @@ namespace Garage2.Models
 
         [Required]
         [StringLength(10)]
+        [Display(Name = "Registration No")]
         public string RegNo { get; set; }
 
         [Required]
+        [Display(Name = "Vehicle Type")]
         public vehicleenum VehicleType { get; set; }
 
         [Required]
@@ -25,6 +27,7 @@ namespace Garage2.Models
         public string Brand { get; set; }
 
         [StringLength(10)]
+        [Display(Name = "Model")]
         public string VehicleModel { get; set; }
 
         [Required]
@@ -33,8 +36,10 @@ namespace Garage2.Models
 
         [Required]
         [Range(1,10)]
+        [Display(Name = "No Of Wheels")]
         public int NoOfWheels { get; set; }
 
+        [Display(Name = "Park Time")]
         public DateTime ParkTime { get; set; }
 
     }
