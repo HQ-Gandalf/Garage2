@@ -116,6 +116,41 @@ namespace Garage2.Controllers
             return RedirectToAction("Index");
         }
 
+
+        public ActionResult FindVehicle()
+        {
+            string s1 = "Volvo";
+            int aa = 20;
+
+            //var model = db.Employees.Where(i => i.Department == "Sport" && i.Salary == 10).ToList();
+            //var model = db.Employees.Where(i => i.Department == s1 && i.Salary < aa).ToList();
+            var model = db.Vehicles.Where(i => i.Brand == s1).OrderByDescending(i => i.RegNo).ToList();
+            /*
+                var model =
+                   from p in db.Employees
+                   where p.Department == s1 && p.Salary < aa
+                   select p;
+            */
+            return View(model);
+        }
+
+        public ActionResult Search()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Search([Bind(Include = "Id,RegNo,VehicleType,Brand")] Vehicle v1)
+        {
+            string s1 = v1.RegNo;
+            var model =
+               from p in db.Vehicles
+               where p.RegNo == s1
+               select p;
+            return View("FindVehicle", model);    // Back to FindVehicle view !
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

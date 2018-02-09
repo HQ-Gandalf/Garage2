@@ -33,8 +33,37 @@ namespace Garage2.Migrations
                      Color = "Black",
                      NoOfWheels = 4,
                      ParkTime = DateTime.Now
+                 },
+                 new Models.Vehicle
+                 {
+                     RegNo = "ZRT888",
+                     VehicleType = vehicleenum.Car,
+                     Brand = "Porche",
+                     VehicleModel = "S40",
+                     Color = "Black",
+                     NoOfWheels = 4,
+                     ParkTime = DateTime.Now
+                 },
+                 new Models.Vehicle
+                 {
+                     RegNo = "YTR654",
+                     VehicleType = vehicleenum.Car,
+                     Brand = "Volvo",
+                     VehicleModel = "S90",
+                     Color = "Red",
+                     NoOfWheels = 4,
+                     ParkTime = DateTime.Now
+                 },
+                 new Models.Vehicle
+                 {
+                     RegNo = "XQW777",
+                     VehicleType = vehicleenum.Car,
+                     Brand = "Fiat",
+                     VehicleModel = "S40",
+                     Color = "Black",
+                     NoOfWheels = 4,
+                     ParkTime = DateTime.Now
                  }
-
 
                );
 
