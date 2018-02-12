@@ -13,7 +13,9 @@ namespace Garage2.Controllers
 {
     public class VehiclesController : Controller
     {
+        
         private static GarageContext db = new GarageContext();
+        public const int pricePerHour = 100;
         public static int garagesize = 150;
 
         // count no of vehicles in garage
@@ -103,7 +105,7 @@ namespace Garage2.Controllers
         }
 
         // GET: Vehicles/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Checkout(int? id)
         {
             if (id == null)
             {
@@ -117,9 +119,29 @@ namespace Garage2.Controllers
             return View(vehicle);
         }
 
+
+
+        public ActionResult Receipt(int? id)
+        {
+            var model =
+            db.Vehicles.Where(v => v.Id == id)
+            .Select(v => new ReceiptViewModel
+            {
+                Id = v.Id,
+                RegNo = v.RegNo,
+                ParkTime = v.ParkTime,
+                CheckOutTime = DateTime.Now,
+                ParkedHrs = 0,
+                Price = 0
+            }).SingleOrDefault();
+            model.ParkedHrs = Convert.ToInt16(Math.Ceiling((model.CheckOutTime - model.ParkTime).TotalHours));
+            model.Price = model.ParkedHrs * pricePerHour;
+            return View(model);
+        }
+
         // POST: Vehicles/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             Vehicle vehicle = db.Vehicles.Find(id);
