@@ -158,10 +158,6 @@
     <Compile Include="Migrations\201802091308020_Init.Designer.cs">
       <DependentUpon>201802091308020_Init.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201802120827441_test.cs" />
-    <Compile Include="Migrations\201802120827441_test.Designer.cs">
-      <DependentUpon>201802120827441_test.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ReceiptViewModel.cs" />
     <Compile Include="Models\Vehicle.cs" />
