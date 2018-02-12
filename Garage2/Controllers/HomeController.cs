@@ -10,6 +10,10 @@ namespace Garage2.Controllers
     {
         public ActionResult Index()
         {
+            // count no of vehicles in garage
+            ViewBag.size = VehiclesController.garagesize;
+            ViewBag.num = VehiclesController.CheckNoInGarage();
+
             return View();
         }
 

@@ -13,11 +13,22 @@ namespace Garage2.Controllers
 {
     public class VehiclesController : Controller
     {
-        private GarageContext db = new GarageContext();
+        private static GarageContext db = new GarageContext();
+        public static int garagesize = 150;
+
+        // count no of vehicles in garage
+        public static int CheckNoInGarage()
+        {
+            return db.Vehicles.Count();
+        }
 
         // GET: Vehicles
         public ActionResult Index()
         {
+            // count no of vehicles in garage
+            ViewBag.size = garagesize;
+            ViewBag.num = CheckNoInGarage();
+
             return View(db.Vehicles.ToList());
         }
 
