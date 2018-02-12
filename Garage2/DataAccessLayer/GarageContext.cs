@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Data.Entity;
 
+// Persistent, ie database-file remains on disk between different
+// runs of the application
 
 namespace Garage2.DataAccessLayer
 {

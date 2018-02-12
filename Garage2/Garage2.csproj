@@ -209,6 +209,8 @@
     <Content Include="Views\Vehicles\Details.cshtml" />
     <Content Include="Views\Vehicles\Edit.cshtml" />
     <Content Include="Views\Vehicles\Index.cshtml" />
+    <Content Include="Views\Vehicles\FindVehicle.cshtml" />
+    <Content Include="Views\Vehicles\Search.cshtml" />
     <Content Include="Views\Vehicles\Receipt.cshtml" />
   </ItemGroup>
   <ItemGroup>

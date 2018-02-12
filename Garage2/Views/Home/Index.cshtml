@@ -3,29 +3,43 @@
 }
 
 <div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    <h1>Frodo's Garage</h1>
+    <p class="lead">Here you can park your vehicle in a safe and friendly environment. We have extensive
+     security features, including teargas, armoured doors and mad free-running guarddogs.</p>
+    <br>
+    <button type="button" onclick="myFunc2()">Learn more</button>
+    <br>
 </div>
 
 <div class="row">
     <div class="col-md-4">
-        <h2>Getting started</h2>
+        <h2>Park your car.</h2>
         <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
+            Park Park
         </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+        @Html.ActionLink("Park", "Create", "Vehicles")
+        
     </div>
     <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+        <h2>Check out our car</h2>
+        <p>Does not work, no id reference... </p>
+        @Html.ActionLink("Check Out", "Delete", "Vehicles")
     </div>
     <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+        <h2>Search for a Vehicle</h2>
+        <p>Find a Vehicle by Registration Number or by Brand.</p>
+        @Html.ActionLink("Search", "Search", "Vehicles")
     </div>
 </div>
+
+
+
+<script>
+
+    function myFunc2() {
+
+        alert("Price List:  Car:  20/h   200/24h          Bus:  30/h   300/24h ");
+        
+    }
+
+</script>
