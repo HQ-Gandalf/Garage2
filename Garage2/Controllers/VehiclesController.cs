@@ -144,10 +144,11 @@ namespace Garage2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Search([Bind(Include = "Id,RegNo,VehicleType,Brand")] Vehicle v1)
         {
-            string s1 = v1.RegNo;
+            string rn = v1.RegNo;     
+            string brand = v1.Brand;   
             var model =
                from p in db.Vehicles
-               where p.RegNo == s1
+               where (p.RegNo == rn || p.Brand == brand)
                select p;
             return View("FindVehicle", model);    // Back to FindVehicle view !
         }
