@@ -15,7 +15,7 @@ namespace Garage2.Controllers
     {
         
         private GarageContext db = new GarageContext();
-        public const int pricePerHour = 100;
+        public const int pricePerTime = 100;
         public static int garagesize = 9;
 
         // count no of vehicles in garage
@@ -154,8 +154,8 @@ namespace Garage2.Controllers
                 ParkedHrs = 0,
                 Price = 0
             }).SingleOrDefault();
-            model.ParkedHrs = Convert.ToInt16(Math.Ceiling((model.CheckOutTime - model.ParkTime).TotalHours));
-            model.Price = model.ParkedHrs * pricePerHour;
+            model.ParkedHrs = Convert.ToInt32(Math.Ceiling((model.CheckOutTime - model.ParkTime).TotalHours));
+            model.Price = model.ParkedHrs * pricePerTime;
             return View(model);
         }
 
@@ -204,6 +204,31 @@ namespace Garage2.Controllers
                where (p.RegNo == rn || p.Brand == brand)
                select p;
             return View("FindVehicle", model);    // Back to FindVehicle view !
+        }
+
+        public ActionResult Statistics()
+        {
+            int parkingTime = 0;
+            foreach (var item in db.Vehicles)
+            {
+                parkingTime += ComputeParkingTime(item.ParkTime, DateTime.Now);
+            }
+            var model = new StatisticsViewModel
+                {
+                    NoOfTrucks = db.Vehicles.Where(h => h.VehicleType == vehicleenum.Truck).Count(),
+                    NoOfBuses = db.Vehicles.Where(h => h.VehicleType == vehicleenum.Bus).Count(),
+                    NoOfCars = db.Vehicles.Where(h => h.VehicleType == vehicleenum.Car).Count(),
+                    NoOfMcs = db.Vehicles.Where(h => h.VehicleType == vehicleenum.Mc).Count(),
+                    WheelsTotal = db.Vehicles.Select(g => g.NoOfWheels).Sum(),
+                    CurrentParkingValue = parkingTime * pricePerTime
+            };
+
+            return View(model);
+        }
+
+        private int ComputeParkingTime(DateTime checkin, DateTime checkout)
+        {
+            return Convert.ToInt32(Math.Ceiling((checkout - checkin).TotalHours));
         }
 
         protected override void Dispose(bool disposing)

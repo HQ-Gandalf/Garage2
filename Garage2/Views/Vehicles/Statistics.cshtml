@@ -1,0 +1,64 @@
+﻿@model Garage2.Models.StatisticsViewModel
+
+@{
+    ViewBag.Title = "Statistics";
+}
+
+<h2>Garage Statistics</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NoOfTrucks)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NoOfTrucks)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NoOfBuses)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NoOfBuses)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NoOfCars)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NoOfCars)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NoOfMcs)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NoOfMcs)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WheelsTotal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WheelsTotal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrentParkingValue)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CurrentParkingValue)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>
