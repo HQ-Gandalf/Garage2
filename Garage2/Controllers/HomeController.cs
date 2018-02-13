@@ -3,20 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Garage2.Controllers;
 using Garage2.DataAccessLayer;
 
 namespace Garage2.Controllers
 {
     public class HomeController : Controller
     {
+
+        // Points to the same db, just a new context, so that it can be accessed from here.
         private GarageContext db = new GarageContext();
 
         public ActionResult Index()
         {
-            // count no of vehicles in garage
+            var c = db.Vehicles.Count();
+            ViewBag.num = c;
             ViewBag.size = VehiclesController.garagesize;
-            ViewBag.num = db.Vehicles.Count();
 
             return View();
         }
