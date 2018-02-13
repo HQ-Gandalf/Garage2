@@ -110,7 +110,7 @@ namespace Garage2.Controllers
         {
             ViewBag.RegNoMessage = "";
 
-            if (db.Vehicles.Where(v => v.RegNo == vehicle.RegNo).Any())
+            if (db.Vehicles.Where(v => v.Id != vehicle.Id && v.RegNo == vehicle.RegNo).Any())
             {
                 ViewBag.RegNoMessage = "Registration No already exists in garage";
             }
