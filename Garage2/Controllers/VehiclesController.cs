@@ -14,12 +14,12 @@ namespace Garage2.Controllers
     public class VehiclesController : Controller
     {
         
-        private static GarageContext db = new GarageContext();
+        private GarageContext db = new GarageContext();
         public const int pricePerHour = 100;
-        public static int garagesize = 150;
+        public static int garagesize = 9;
 
         // count no of vehicles in garage
-        public static int CheckNoInGarage()
+        public int CheckNoInGarage()
         {
             return db.Vehicles.Count();
         }
@@ -52,6 +52,11 @@ namespace Garage2.Controllers
         // GET: Vehicles/Create
         public ActionResult Create()
         {
+            
+            if(garagesize == CheckNoInGarage()) {
+                return View("CreateFull");
+            }
+            else
             return View();
         }
 
@@ -62,13 +67,14 @@ namespace Garage2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,RegNo,VehicleType,Brand,VehicleModel,Color,NoOfWheels,ParkTime")] Vehicle vehicle)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && CheckNoInGarage() < garagesize)
             {
                 vehicle.ParkTime = DateTime.Now;
                 db.Vehicles.Add(vehicle);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            
 
             return View(vehicle);
         }
@@ -125,7 +131,7 @@ namespace Garage2.Controllers
         {
             var model =
             db.Vehicles.Where(v => v.Id == id)
-            .Select(v => new ReceiptViewModel
+            .Select(v => new Garage2.Models.ReceiptViewModel
             {
                 Id = v.Id,
                 RegNo = v.RegNo,

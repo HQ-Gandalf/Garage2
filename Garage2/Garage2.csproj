@@ -149,6 +149,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ReceiptViewModel.cs" />
     <Compile Include="Controllers\VehiclesController.cs" />
     <Compile Include="DataAccessLayer\GarageContext.cs" />
     <Compile Include="Global.asax.cs">
@@ -208,6 +209,7 @@
     <Content Include="Views\Vehicles\FindVehicle.cshtml" />
     <Content Include="Views\Vehicles\Search.cshtml" />
     <Content Include="Views\Vehicles\Receipt.cshtml" />
+    <Content Include="Views\Vehicles\CreateFull.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
