@@ -159,6 +159,10 @@
     <Compile Include="Migrations\201802091308020_Init.Designer.cs">
       <DependentUpon>201802091308020_Init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201802131025327_Parking Space.cs" />
+    <Compile Include="Migrations\201802131025327_Parking Space.Designer.cs">
+      <DependentUpon>201802131025327_Parking Space.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ReceiptViewModel.cs" />
     <Compile Include="Models\Vehicle.cs" />
@@ -230,6 +234,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201802091308020_Init.resx">
       <DependentUpon>201802091308020_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802131025327_Parking Space.resx">
+      <DependentUpon>201802131025327_Parking Space.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

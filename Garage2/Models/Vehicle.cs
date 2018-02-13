@@ -42,5 +42,8 @@ namespace Garage2.Models
         [Display(Name = "Park Time")]
         public DateTime ParkTime { get; set; }
 
+        [Display(Name = "Parking Space")]
+        public int ParkingSpace { get; set; }
+
     }
 }

@@ -23,7 +23,9 @@ namespace Garage2.Migrations
             context.Vehicles.AddOrUpdate(
                p => p.RegNo,
                  new Models.Vehicle { RegNo = "ABC123", VehicleType = vehicleenum.Car, Brand = "Volvo", VehicleModel = "S40",
-                     Color = "Black", NoOfWheels =4, ParkTime = DateTime.Now },
+                     Color = "Black", NoOfWheels =4, ParkTime = DateTime.Now,
+                     ParkingSpace = 5
+                 },
                  new Models.Vehicle
                  {
                      RegNo = "XYZ987",
@@ -32,7 +34,8 @@ namespace Garage2.Migrations
                      VehicleModel = "S40",
                      Color = "Black",
                      NoOfWheels = 4,
-                     ParkTime = DateTime.Now
+                     ParkTime = DateTime.Now,
+                     ParkingSpace = 2
                  },
                  new Models.Vehicle
                  {
@@ -42,7 +45,8 @@ namespace Garage2.Migrations
                      VehicleModel = "S40",
                      Color = "Black",
                      NoOfWheels = 4,
-                     ParkTime = DateTime.Now
+                     ParkTime = DateTime.Now,
+                     ParkingSpace = 7
                  },
                  new Models.Vehicle
                  {
@@ -52,7 +56,8 @@ namespace Garage2.Migrations
                      VehicleModel = "S90",
                      Color = "Red",
                      NoOfWheels = 4,
-                     ParkTime = DateTime.Now
+                     ParkTime = DateTime.Now,
+                     ParkingSpace = 3
                  },
                  new Models.Vehicle
                  {
@@ -62,7 +67,8 @@ namespace Garage2.Migrations
                      VehicleModel = "S40",
                      Color = "Black",
                      NoOfWheels = 4,
-                     ParkTime = DateTime.Now
+                     ParkTime = DateTime.Now,
+                     ParkingSpace = 1 
                  }
 
                );
