@@ -76,7 +76,24 @@ namespace Garage2.Controllers
 
             else if (ModelState.IsValid && CheckNoInGarage() < garagesize)
             {
+
+                // Find first parking-space nuber that is not already used
+                int pspace = 0;
+                for (int i=1; i<=garagesize; i++)
+                {
+                    if (db.Vehicles.Where(v => v.ParkingSpace == i).Any())
+                    {
+                        pspace = 0;
+                    }
+                    else
+                    {
+                        pspace = i;
+                        break;
+                    }
+                }
+
                 vehicle.ParkTime = DateTime.Now;
+                vehicle.ParkingSpace = pspace;
                 db.Vehicles.Add(vehicle);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -106,7 +123,7 @@ namespace Garage2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,RegNo,VehicleType,Brand,VehicleModel,Color,NoOfWheels,ParkTime")] Vehicle vehicle)
+        public ActionResult Edit([Bind(Include = "Id,RegNo,VehicleType,Brand,VehicleModel,Color,NoOfWheels,ParkTime,ParkingSpace")] Vehicle vehicle)
         {
             ViewBag.RegNoMessage = "";
 

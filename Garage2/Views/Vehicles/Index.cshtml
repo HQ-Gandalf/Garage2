@@ -33,6 +33,9 @@
         <th>
             @Html.DisplayNameFor(model => model.ParkTime)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ParkingSpace)
+        </th>
         <th></th>
     </tr>
 
@@ -55,6 +58,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.ParkTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ParkingSpace)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
