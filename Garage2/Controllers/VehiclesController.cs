@@ -14,12 +14,12 @@ namespace Garage2.Controllers
     public class VehiclesController : Controller
     {
         
-        private static GarageContext db = new GarageContext();
+        private GarageContext db = new GarageContext();
         public const int pricePerHour = 100;
         public static int garagesize = 150;
 
         // count no of vehicles in garage
-        public static int CheckNoInGarage()
+        public int CheckNoInGarage()
         {
             return db.Vehicles.Count();
         }
@@ -62,7 +62,14 @@ namespace Garage2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,RegNo,VehicleType,Brand,VehicleModel,Color,NoOfWheels,ParkTime")] Vehicle vehicle)
         {
-            if (ModelState.IsValid)
+            ViewBag.RegNoMessage = "";
+
+            if (db.Vehicles.Where(v=>v.RegNo == vehicle.RegNo).Any())
+            {
+                ViewBag.RegNoMessage = "Registration No already exists in garage";
+            }
+
+            else if (ModelState.IsValid)
             {
                 vehicle.ParkTime = DateTime.Now;
                 db.Vehicles.Add(vehicle);
@@ -95,7 +102,14 @@ namespace Garage2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,RegNo,VehicleType,Brand,VehicleModel,Color,NoOfWheels,ParkTime")] Vehicle vehicle)
         {
-            if (ModelState.IsValid)
+            ViewBag.RegNoMessage = "";
+
+            if (db.Vehicles.Where(v => v.RegNo == vehicle.RegNo).Any())
+            {
+                ViewBag.RegNoMessage = "Registration No already exists in garage";
+            }
+
+            else if (ModelState.IsValid)
             {
                 db.Entry(vehicle).State = EntityState.Modified;
                 db.SaveChanges();
