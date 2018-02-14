@@ -25,13 +25,75 @@ namespace Garage2.Controllers
         }
 
         // GET: Vehicles
-        public ActionResult Index()
+        //public ActionResult Index()
+        //{
+        //    // count no of vehicles in garage
+        //    ViewBag.size = garagesize;
+        //    ViewBag.num = CheckNoInGarage();
+
+        //    return View(db.Vehicles.ToList());
+        //}
+
+        public ActionResult Index(string sortOrder)
         {
             // count no of vehicles in garage
             ViewBag.size = garagesize;
             ViewBag.num = CheckNoInGarage();
 
-            return View(db.Vehicles.ToList());
+            ViewBag.SpaceSortParm = String.IsNullOrEmpty(sortOrder) ? "space_desc" : "";
+            ViewBag.RegNoSortParm = sortOrder == "RegNo" ? "regno_desc" : "RegNo";
+            ViewBag.TypeSortParm = sortOrder == "Type" ? "type_desc" : "Type";
+            ViewBag.BrandSortParm = sortOrder == "Brand" ? "brand_desc" : "Brand";
+            ViewBag.ModelSortParm = sortOrder == "Model" ? "model_desc" : "Model";
+            ViewBag.ColorSortParm = sortOrder == "Color" ? "color_desc" : "Color";
+            ViewBag.ParkTimeSortParm = sortOrder == "ParkTime" ? "parktime_desc" : "ParkTime";
+            var vehicles = db.Vehicles.Select(v => v);
+            switch (sortOrder)
+            {
+                case "space_desc":
+                    vehicles = vehicles.OrderByDescending(v => v.ParkingSpace);
+                    break;
+                case "RegNo":
+                    vehicles = vehicles.OrderBy(v => v.RegNo);
+                    break;
+                case "regno_desc":
+                    vehicles = vehicles.OrderByDescending(v => v.RegNo);
+                    break;
+                case "Type":
+                    vehicles = vehicles.OrderBy(v => v.VehicleType);
+                    break;
+                case "type_desc":
+                    vehicles = vehicles.OrderByDescending(v => v.VehicleType);
+                    break;
+                case "Brand":
+                    vehicles = vehicles.OrderBy(v => v.Brand);
+                    break;
+                case "brand_desc":
+                    vehicles = vehicles.OrderByDescending(v => v.Brand);
+                    break;
+                case "Model":
+                    vehicles = vehicles.OrderBy(v => v.VehicleModel);
+                    break;
+                case "model_desc":
+                    vehicles = vehicles.OrderByDescending(v => v.VehicleModel);
+                    break;
+                case "Color":
+                    vehicles = vehicles.OrderBy(v => v.Color);
+                    break;
+                case "color_desc":
+                    vehicles = vehicles.OrderByDescending(v => v.Color);
+                    break;
+                case "ParkTime":
+                    vehicles = vehicles.OrderBy(v => v.ParkTime);
+                    break;
+                case "parktime_desc":
+                    vehicles = vehicles.OrderByDescending(v => v.ParkTime);
+                    break;
+                default:
+                    vehicles = vehicles.OrderBy(v => v.ParkingSpace);
+                    break;
+            }
+            return View(vehicles.ToList());
         }
 
         // GET: Vehicles/Details/5
@@ -115,7 +177,7 @@ namespace Garage2.Controllers
             return View(vehicle);
         }
 
-        private bool BigVehicle(Vehicle vehicle)
+        public bool BigVehicle(Vehicle vehicle)
         {
             if (vehicle.VehicleType == vehicleenum.Bus || vehicle.VehicleType == vehicleenum.Truck)
             {
