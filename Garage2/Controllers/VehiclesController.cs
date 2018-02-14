@@ -144,17 +144,14 @@ namespace Garage2.Controllers
                 for (int i=1; i<=garagesize; i++)
                 {
                     var spaceVehicles = db.Vehicles.Where(v => v.ParkingSpace == i);
-                    var count = spaceVehicles.Count();
-                    int vehiclesPerSpace = 1;
-                    if (count > 0 && spaceVehicles.FirstOrDefault().VehicleType == vehicleenum.Mc && vehicle.VehicleType == vehicleenum.Mc)
-                    {
-                        vehiclesPerSpace = 3;
-                    }
+                    //var count = spaceVehicles.Count();
+                    //int vehiclesPerSpace = 1;
+                    //if (count > 0 && spaceVehicles.FirstOrDefault().VehicleType == vehicleenum.Mc && vehicle.VehicleType == vehicleenum.Mc)
+                    //{
+                    //    vehiclesPerSpace = 3;
+                    //}
 
-                    if (count < vehiclesPerSpace 
-                        && (!BigVehicle(vehicle)
-                        || !db.Vehicles.Where(v => v.ParkingSpace == i + 1).Any())
-                        && (db.Vehicles.Where(v => v.ParkingSpace == i - 1).Any() ? !BigVehicle(db.Vehicles.Where(v => v.ParkingSpace == i - 1).FirstOrDefault()) : true))
+                    if (true)
 
                     {
                         pspace = i;
