@@ -140,6 +140,7 @@ namespace Garage2.Controllers
             {
 
                 // Find first parking-space nuber that is not already used
+                var dummy = "";
                 int pspace = 0;
                 for (int i=1; i<=garagesize; i++)
                 {
