@@ -141,38 +141,31 @@ namespace Garage2.Controllers
 
             else if (ModelState.IsValid && CheckNoInGarage() < garagesize)
             {
-                int pspace = 0;   // Parking space where the new vehicle will be put
-                var mct = db.Vehicles.Where(v => v.VehicleType == vehicleenum.Mc);
-                if (mct.Count() > 0 && vehicle.VehicleType == vehicleenum.Mc)
+
+                // Find first parking-space nuber that is not already used
+                int pspace = 0;
+                for (int i=1; i<=garagesize; i++)
                 {
-                    // Special handling for a new MC, when there is already at least one Mc parked
-                    // Try to find a parking space that is used by 1 or 2 MCs.
-                    foreach (var x in mct)
+                    var spaceVehicles = db.Vehicles.Where(v => v.ParkingSpace == i);
+                    var count = spaceVehicles.Count();
+                    int vehiclesPerSpace = 1;
+                    if (count > 0 && spaceVehicles.FirstOrDefault().VehicleType == vehicleenum.Mc && vehicle.VehicleType == vehicleenum.Mc)
                     {
-                        int p = x.ParkingSpace;
-                        var y = mct.Where(v => v.ParkingSpace == p).Count();
-                        if (y == 1 || y == 2)
-                        {
-                            pspace = p;
-                        }
+                        vehiclesPerSpace = 3;
                     }
-                }
 
-                if(pspace == 0)
-                {
-                    // Find first parking-space number that is not already used
+                    if (count < vehiclesPerSpace 
+                        && (!BigVehicle(vehicle)
+                        || !db.Vehicles.Where(v => v.ParkingSpace == i + 1).Any())
+                        && (db.Vehicles.Where(v => v.ParkingSpace == i - 1).Any() ? !BigVehicle(db.Vehicles.Where(v => v.ParkingSpace == i - 1).FirstOrDefault()) : true))
 
-                    for (int i = 1; i <= garagesize; i++)
                     {
-                        if (db.Vehicles.Where(v => v.ParkingSpace == i).Any())
-                        {
-                            pspace = 0;
-                        }
-                        else
-                        {
-                            pspace = i;
-                            break;
-                        }
+                        pspace = i;
+                        break;
+                    }
+                    else
+                    {
+                        pspace = 0;
                     }
                 }
 
