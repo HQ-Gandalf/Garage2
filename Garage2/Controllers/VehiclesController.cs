@@ -16,12 +16,14 @@ namespace Garage2.Controllers
         
         private GarageContext db = new GarageContext();
         public const int pricePerTime = 100;
-        public static int garagesize = 9;
+        public static int garagesize = 25;
 
         // count no of vehicles in garage
         public int CheckNoInGarage()
         {
-            return db.Vehicles.Count();
+            int c = db.Vehicles.GroupBy(v => v.ParkingSpace).Count();
+            //return db.Vehicles.Count();
+            return c;
         }
 
         // GET: Vehicles
@@ -29,7 +31,8 @@ namespace Garage2.Controllers
         {
             // count no of vehicles in garage
             ViewBag.size = garagesize;
-            ViewBag.num = CheckNoInGarage();
+            ViewBag.numSpace = CheckNoInGarage();
+            ViewBag.numVehicle = db.Vehicles.Count();
 
             return View(db.Vehicles.ToList());
         }
@@ -76,19 +79,38 @@ namespace Garage2.Controllers
 
             else if (ModelState.IsValid && CheckNoInGarage() < garagesize)
             {
-
-                // Find first parking-space nuber that is not already used
-                int pspace = 0;
-                for (int i=1; i<=garagesize; i++)
+                int pspace = 0;   // Parking space where the new vehicle will be put
+                var mct = db.Vehicles.Where(v => v.VehicleType == vehicleenum.Mc);
+                if (mct.Count() > 0 && vehicle.VehicleType == vehicleenum.Mc)
                 {
-                    if (db.Vehicles.Where(v => v.ParkingSpace == i).Any())
+                    // Special handling for a new MC, when there is already at least one Mc parked
+                    // Try to find a parking space that is used by 1 or 2 MCs.
+                    foreach (var x in mct)
                     {
-                        pspace = 0;
+                        int p = x.ParkingSpace;
+                        var y = mct.Where(v => v.ParkingSpace == p).Count();
+                        if (y == 1 || y == 2)
+                        {
+                            pspace = p;
+                        }
                     }
-                    else
+                }
+
+                if(pspace == 0)
+                {
+                    // Find first parking-space number that is not already used
+
+                    for (int i = 1; i <= garagesize; i++)
                     {
-                        pspace = i;
-                        break;
+                        if (db.Vehicles.Where(v => v.ParkingSpace == i).Any())
+                        {
+                            pspace = 0;
+                        }
+                        else
+                        {
+                            pspace = i;
+                            break;
+                        }
                     }
                 }
 

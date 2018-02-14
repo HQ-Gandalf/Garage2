@@ -15,8 +15,10 @@ namespace Garage2.Controllers
 
         public ActionResult Index()
         {
-            var c = db.Vehicles.Count();
-            ViewBag.num = c;
+            int v1 = db.Vehicles.Count();
+            int s1 = db.Vehicles.GroupBy(v => v.ParkingSpace).Count();
+            ViewBag.numSpace = s1;
+            ViewBag.numVehicle = v1;
             ViewBag.size = VehiclesController.garagesize;
 
             return View();

@@ -9,7 +9,7 @@
     <br>
     <button type="button" onclick="myFunc2()">Learn more</button>
     <br><br>
-    <h4>The Garage has @ViewBag.size places, @ViewBag.num are currently occupied. </h4>
+    <h4>The Garage has @ViewBag.size places, @ViewBag.numSpace are occupied, and there are @ViewBag.numVehicle parked vehicles. </h4>
    
 </div>
 <br>
@@ -18,7 +18,7 @@
     <div class="col-md-4">
         <h2>Park your car.</h2>
         <p>
-            Park Park
+            The World's Nicest Garage !
         </p>
         @Html.ActionLink("Park", "Create", "Vehicles")
         
@@ -26,7 +26,7 @@
     
     <div class="col-md-4">
         <h2>Search for a Vehicle</h2>
-        <p>Find a Vehicle by Registration Number or by Brand.</p>
+        <p>Find a parked Vehicle by Registration Number or by Brand.</p>
         @Html.ActionLink("Search", "Search", "Vehicles")
     </div>
 </div>
