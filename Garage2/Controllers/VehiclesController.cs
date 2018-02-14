@@ -156,7 +156,7 @@ namespace Garage2.Controllers
 
                     if (count < vehiclesPerSpace 
                         && (!BigVehicle(vehicle)
-                        || !db.Vehicles.Where(v => v.ParkingSpace == i + 1).Any())
+                        || (!db.Vehicles.Where(v => v.ParkingSpace == i + 1).Any() && i<garagesize))
                         && (db.Vehicles.Where(v => v.ParkingSpace == i - 1).Any() ? !BigVehicle(db.Vehicles.Where(v => v.ParkingSpace == i - 1).FirstOrDefault()) : true))
 
                     {
