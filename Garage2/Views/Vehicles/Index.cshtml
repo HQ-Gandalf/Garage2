@@ -16,25 +16,32 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.RegNo)
+        @*    @Html.DisplayNameFor(model => model.RegNo)*@
+            @Html.ActionLink("Registration No", "Index", new { sortOrder = ViewBag.RegNoSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.VehicleType)
+ @*           @Html.DisplayNameFor(model => model.VehicleType)*@
+            @Html.ActionLink("Vehicle Type", "Index", new { sortOrder = ViewBag.TypeSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Brand)
+   @*         @Html.DisplayNameFor(model => model.Brand)*@
+            @Html.ActionLink("Brand", "Index", new { sortOrder = ViewBag.BrandSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.VehicleModel)
+   @*         @Html.DisplayNameFor(model => model.VehicleModel)*@
+            @Html.ActionLink("Model", "Index", new { sortOrder = ViewBag.ModelSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Color)
+  @*          @Html.DisplayNameFor(model => model.Color)*@
+            @Html.ActionLink("Color", "Index", new { sortOrder = ViewBag.ColorSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ParkTime)
+   @*         @Html.DisplayNameFor(model => model.ParkTime)*@
+            @Html.ActionLink("Park Time", "Index", new { sortOrder = ViewBag.ParkTimeSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ParkingSpace)
+    @*        @Html.DisplayNameFor(model => model.ParkingSpace)*@
+            @Html.ActionLink("Parking Space", "Index", new { sortOrder = ViewBag.SpaceSortParm })
         </th>
         <th></th>
     </tr>
