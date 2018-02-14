@@ -81,14 +81,26 @@ namespace Garage2.Controllers
                 int pspace = 0;
                 for (int i=1; i<=garagesize; i++)
                 {
-                    if (db.Vehicles.Where(v => v.ParkingSpace == i).Any())
+                    var spaceVehicles = db.Vehicles.Where(v => v.ParkingSpace == i);
+                    var count = spaceVehicles.Count();
+                    int vehiclesPerSpace = 1;
+                    if (count > 0 && spaceVehicles.FirstOrDefault().VehicleType == vehicleenum.Mc && vehicle.VehicleType == vehicleenum.Mc)
                     {
-                        pspace = 0;
+                        vehiclesPerSpace = 3;
                     }
-                    else
+
+                    if (count < vehiclesPerSpace 
+                        && (!BigVehicle(vehicle)
+                        || !db.Vehicles.Where(v => v.ParkingSpace == i + 1).Any())
+                        && (db.Vehicles.Where(v => v.ParkingSpace == i - 1).Any() ? !BigVehicle(db.Vehicles.Where(v => v.ParkingSpace == i - 1).FirstOrDefault()) : true))
+
                     {
                         pspace = i;
                         break;
+                    }
+                    else
+                    {
+                        pspace = 0;
                     }
                 }
 
@@ -101,6 +113,15 @@ namespace Garage2.Controllers
             
 
             return View(vehicle);
+        }
+
+        private bool BigVehicle(Vehicle vehicle)
+        {
+            if (vehicle.VehicleType == vehicleenum.Bus || vehicle.VehicleType == vehicleenum.Truck)
+            {
+                return true;
+            }
+            return false;
         }
 
         // GET: Vehicles/Edit/5
