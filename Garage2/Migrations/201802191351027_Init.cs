@@ -19,6 +19,20 @@ namespace Garage2.Migrations
                         Color = c.String(nullable: false, maxLength: 30),
                         NoOfWheels = c.Int(nullable: false),
                         ParkTime = c.DateTime(nullable: false),
+                        ParkingSpace = c.Int(nullable: false),
+                        MemberId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Members", t => t.MemberId, cascadeDelete: true)
+                .Index(t => t.MemberId);
+            
+            CreateTable(
+                "dbo.Members",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        FirstName = c.String(),
+                        LastName = c.String(),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -26,6 +40,9 @@ namespace Garage2.Migrations
         
         public override void Down()
         {
+            DropForeignKey("dbo.Vehicles", "MemberId", "dbo.Members");
+            DropIndex("dbo.Vehicles", new[] { "MemberId" });
+            DropTable("dbo.Members");
             DropTable("dbo.Vehicles");
         }
     }

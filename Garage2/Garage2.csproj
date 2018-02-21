@@ -149,21 +149,19 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MembersController.cs" />
     <Compile Include="Controllers\ReceiptViewModel.cs" />
     <Compile Include="Controllers\VehiclesController.cs" />
     <Compile Include="DataAccessLayer\GarageContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201802091308020_Init.cs" />
-    <Compile Include="Migrations\201802091308020_Init.Designer.cs">
-      <DependentUpon>201802091308020_Init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201802131025327_Parking Space.cs" />
-    <Compile Include="Migrations\201802131025327_Parking Space.Designer.cs">
-      <DependentUpon>201802131025327_Parking Space.cs</DependentUpon>
+    <Compile Include="Migrations\201802191351027_Init.cs" />
+    <Compile Include="Migrations\201802191351027_Init.Designer.cs">
+      <DependentUpon>201802191351027_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Member.cs" />
     <Compile Include="Models\ReceiptViewModel.cs" />
     <Compile Include="Models\StatisticsViewModel.cs" />
     <Compile Include="Models\Vehicle.cs" />
@@ -216,6 +214,14 @@
     <Content Include="Views\Vehicles\Receipt.cshtml" />
     <Content Include="Views\Vehicles\CreateFull.cshtml" />
     <Content Include="Views\Vehicles\Statistics.cshtml" />
+    <Content Include="Views\Members\Create.cshtml" />
+    <Content Include="Views\Members\Delete.cshtml" />
+    <Content Include="Views\Members\Details.cshtml" />
+    <Content Include="Views\Members\Edit.cshtml" />
+    <Content Include="Views\Members\Index.cshtml" />
+    <Content Include="Views\Members\Search.cshtml" />
+    <Content Include="Views\Members\FindMember.cshtml" />
+    <Content Include="Views\Vehicles\Create2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -234,11 +240,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201802091308020_Init.resx">
-      <DependentUpon>201802091308020_Init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201802131025327_Parking Space.resx">
-      <DependentUpon>201802131025327_Parking Space.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201802191351027_Init.resx">
+      <DependentUpon>201802191351027_Init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

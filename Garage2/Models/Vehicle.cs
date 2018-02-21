@@ -45,5 +45,8 @@ namespace Garage2.Models
         [Display(Name = "Parking Space")]
         public int ParkingSpace { get; set; }
 
+        // Added in Garage 2.5. Båda behövs. Sen Add-Migration, Update-Database, fixa till seed, update db igen.
+        public int MemberId { get; set; }                 // foreign key prop som måste sättas av någon       
+        public virtual Member Member { get; set; }        // navigational prop, set automatically, not in db..  
     }
 }

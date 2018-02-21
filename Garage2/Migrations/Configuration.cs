@@ -20,11 +20,41 @@ namespace Garage2.Migrations
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
 
+            context.Members.AddOrUpdate(
+               p => p.LastName,
+                 new Models.Member
+                 {
+                     FirstName = "Frodo",
+                     LastName = "Baggins",
+                     
+                 },
+                 new Models.Member
+                 {
+                     FirstName = "Billbo",
+                     LastName = "Baggins",                     
+                 },
+
+                 new Models.Member
+                 {
+                     FirstName = "Gandalf",
+                     LastName = "Gray",
+                 }
+
+               );
+
             context.Vehicles.AddOrUpdate(
                p => p.RegNo,
-                 new Models.Vehicle { RegNo = "ABC123", VehicleType = vehicleenum.Car, Brand = "Volvo", VehicleModel = "S40",
-                     Color = "Black", NoOfWheels =4, ParkTime = DateTime.Now,
-                     ParkingSpace = 5
+                 new Models.Vehicle
+                 {
+                     RegNo = "ABC123",
+                     VehicleType = vehicleenum.Car,
+                     Brand = "Volvo",
+                     VehicleModel = "S40",
+                     Color = "Black",
+                     NoOfWheels = 4,
+                     ParkTime = DateTime.Now,
+                     ParkingSpace = 5,
+                     MemberId = 2
                  },
                  new Models.Vehicle
                  {
@@ -35,7 +65,8 @@ namespace Garage2.Migrations
                      Color = "Black",
                      NoOfWheels = 4,
                      ParkTime = DateTime.Now,
-                     ParkingSpace = 2
+                     ParkingSpace = 2,
+                     MemberId = 3
                  },
                  new Models.Vehicle
                  {
@@ -46,7 +77,8 @@ namespace Garage2.Migrations
                      Color = "Black",
                      NoOfWheels = 4,
                      ParkTime = DateTime.Now,
-                     ParkingSpace = 7
+                     ParkingSpace = 7,
+                     MemberId = 1
                  },
                  new Models.Vehicle
                  {
@@ -57,7 +89,8 @@ namespace Garage2.Migrations
                      Color = "Red",
                      NoOfWheels = 4,
                      ParkTime = DateTime.Now,
-                     ParkingSpace = 3
+                     ParkingSpace = 3,
+                     MemberId = 2
                  },
                  new Models.Vehicle
                  {
@@ -68,7 +101,8 @@ namespace Garage2.Migrations
                      Color = "Black",
                      NoOfWheels = 4,
                      ParkTime = DateTime.Now,
-                     ParkingSpace = 1 
+                     ParkingSpace = 1,
+                     MemberId = 1
                  }
 
                );

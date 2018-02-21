@@ -36,7 +36,11 @@ namespace Garage2.Controllers
         //    return View(db.Vehicles.ToList());
         //}
 
-        public ActionResult Index(string sortOrder)
+    // sortOrder param comes from a HTML action link, searchString comes from a searchbox form
+    // that is submitted. Either case will call this Index method, with one if the params set,
+    // triggering either sort or filtering by Brand !  Magic !
+
+        public ViewResult Index(string sortOrder, string searchString)
         {
             // count no of vehicles in garage
             ViewBag.size = garagesize;
@@ -51,6 +55,14 @@ namespace Garage2.Controllers
             ViewBag.ColorSortParm = sortOrder == "Color" ? "color_desc" : "Color";
             ViewBag.ParkTimeSortParm = sortOrder == "ParkTime" ? "parktime_desc" : "ParkTime";
             var vehicles = db.Vehicles.Select(v => v);
+
+            // search for brand, searchString param comes from a searchbox, submit
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                vehicles = vehicles.Where(s => s.Brand.Contains(searchString));                                     
+            }
+
+
             switch (sortOrder)
             {
                 case "space_desc":
@@ -180,6 +192,87 @@ namespace Garage2.Controllers
             return View(vehicle);
         }
 
+        // GET: Vehicles/Create  New in Garage 2.5   Called from a member list, with id
+        public ActionResult CreateWithMember(int? id)
+        {
+            string s1 = "";
+            if (garagesize == CheckNoInGarage())
+            {
+                return View("CreateFull");
+            }
+            else
+            {
+                // Id är member who wants to park a car. Send back nam in a viewbag, then create a new empty
+                // vehicle, set the MemberId in it, and send it to the create2 view. In the view, edit all the fields
+                // and enter data for the vehicle. This data then comes back to the Post action method below, createWithMember
+                // In the view, the MemberId property for the Model (vehicle) must be declared as  @Html.HiddenFor(m => m.MemberId);,
+                // then the value that comes into the view (Model) from the Controller is also posted back to the Controller ...
+
+                Member m1  = db.Members.Find(id);
+                ViewBag.FirstName = m1.FirstName;
+                ViewBag.LastName = m1.LastName;
+                ViewBag.no = id;
+                Vehicle v1 = new Vehicle();
+                v1.MemberId = (int)id;
+                return View("Create2", v1);
+            }
+        }
+
+
+        //  New for Garage 2.5. Just copied, att MemberId, which should be set from the view
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateWithMember([Bind(Include = "Id,RegNo,VehicleType,Brand,VehicleModel,Color,NoOfWheels,ParkTime,MemberId")] Vehicle vehicle)
+        {
+            ViewBag.RegNoMessage = "";
+
+            if (db.Vehicles.Where(v => v.RegNo == vehicle.RegNo).Any())
+            {
+                ViewBag.RegNoMessage = "Registration No already exists in garage";
+            }
+
+            else if (ModelState.IsValid && CheckNoInGarage() < garagesize)
+            {
+
+                // Find first parking-space nuber that is not already used
+                int pspace = 0;
+                for (int i = 1; i <= garagesize; i++)
+                {
+                    var spaceVehicles = db.Vehicles.Where(v => v.ParkingSpace == i);
+                    var count = spaceVehicles.Count();
+                    int vehiclesPerSpace = 1;
+                    if (count > 0 && spaceVehicles.FirstOrDefault().VehicleType == vehicleenum.Mc && vehicle.VehicleType == vehicleenum.Mc)
+                    {
+                        vehiclesPerSpace = 3;
+                    }
+
+                    if (count < vehiclesPerSpace
+                        && (!BigVehicle(vehicle)
+                        || (!db.Vehicles.Where(v => v.ParkingSpace == i + 1).Any() && i < garagesize))
+                        && (db.Vehicles.Where(v => v.ParkingSpace == i - 1).Any() ? !BigVehicle(db.Vehicles.Where(v => v.ParkingSpace == i - 1).FirstOrDefault()) : true))
+
+                    {
+                        pspace = i;
+                        break;
+                    }
+                    else
+                    {
+                        pspace = 0;
+                    }
+                }
+
+                vehicle.ParkTime = DateTime.Now;
+                vehicle.ParkingSpace = pspace;
+                db.Vehicles.Add(vehicle);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+
+            return View(vehicle);
+        }
+
+
         public bool BigVehicle(Vehicle vehicle)
         {
             if (vehicle.VehicleType == vehicleenum.Bus || vehicle.VehicleType == vehicleenum.Truck)
@@ -195,6 +288,7 @@ namespace Garage2.Controllers
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
             }
             Vehicle vehicle = db.Vehicles.Find(id);
             if (vehicle == null)
@@ -239,6 +333,10 @@ namespace Garage2.Controllers
             {
                 return HttpNotFound();
             }
+            // Added this for Garage 2.5
+            Member m1 = db.Members.Find(vehicle.MemberId);
+            ViewBag.FirstName = m1.FirstName;
+            ViewBag.LastName = m1.LastName;
             return View(vehicle);
         }
 
@@ -259,6 +357,13 @@ namespace Garage2.Controllers
             }).SingleOrDefault();
             model.ParkedHrs = Convert.ToInt32(Math.Ceiling((model.CheckOutTime - model.ParkTime).TotalHours));
             model.Price = model.ParkedHrs * pricePerTime;
+
+            // Added this for Garage 2.5
+            Vehicle vehicle = db.Vehicles.Find(id);
+            Member m1 = db.Members.Find(vehicle.MemberId);
+            ViewBag.FirstName = m1.FirstName;
+            ViewBag.LastName = m1.LastName;
+
             return View(model);
         }
 
